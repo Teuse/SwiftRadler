@@ -1,14 +1,14 @@
 import SwiftUI
 
-protocol Titled {
+public protocol Titled {
     var title: String { get }
 }
 
-struct OptionsPicker<T: CaseIterable & RawRepresentable & Titled & Equatable>: View where T.RawValue == Int {
+public struct OptionsPicker<T: CaseIterable & RawRepresentable & Titled & Equatable>: View where T.RawValue == Int {
    @Environment(\.colorScheme) var colorScheme
    @Binding var currentValue: T
    
-   var body: some View {
+   public var body: some View {
       VStack {
          HStack(spacing: 0) {
             ForEach(0..<T.allCases.count, id: \.self) { index in
