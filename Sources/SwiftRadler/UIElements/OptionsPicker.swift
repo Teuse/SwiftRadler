@@ -8,6 +8,10 @@ public struct OptionsPicker<T: CaseIterable & RawRepresentable & Titled & Equata
    @Environment(\.colorScheme) var colorScheme
    @Binding var currentValue: T
    
+   public init(currentValue: Binding<T>) {
+      self._currentValue = currentValue
+   }
+   
    public var body: some View {
       VStack {
          HStack(spacing: 0) {
