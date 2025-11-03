@@ -32,7 +32,7 @@ class AppVersionTests: XCTestCase {
        XCTAssertNil(AppVersion(versionString: "blub"))
     }
    
-   func testComparison() throws {
+   func testComparison_3Digits() throws {
       let version1 = AppVersion(major: 1, minor: 2, patch: 3)
       let version2 = AppVersion(major: 1, minor: 2, patch: 3)
       XCTAssertEqual(version1, version2)
@@ -47,7 +47,22 @@ class AppVersionTests: XCTestCase {
       XCTAssertNotEqual(version1, version5)
    }
    
-   func testGreaterSmallerComparisson() throws {
+   func testComparison_2Digits() throws {
+      let version1 = AppVersion(major: 1, minor: 2)
+      let version2 = AppVersion(major: 1, minor: 2)
+      XCTAssertEqual(version1, version2)
+      
+      let version3 = AppVersion(major: 4, minor: 2)
+      XCTAssertNotEqual(version1, version3)
+      
+      let version4 = AppVersion(major: 1, minor: 4)
+      XCTAssertNotEqual(version1, version4)
+      
+      let version5 = AppVersion(major: 4, minor: 4)
+      XCTAssertNotEqual(version1, version5)
+   }
+   
+   func testGreaterSmallerComparisson_3Digits() throws {
       let baseVersion = AppVersion(major: 3, minor: 3, patch: 3)
       
       XCTAssert(!(baseVersion < baseVersion))
@@ -70,5 +85,27 @@ class AppVersionTests: XCTestCase {
       
       let version6 = AppVersion(major: 3, minor: 3, patch: 2)
       XCTAssert(baseVersion > version6)
+   }
+   
+   func testGreaterSmallerComparisson_2Digits() throws {
+      let baseVersion = AppVersion(major: 3, minor: 3)
+      
+      XCTAssert(!(baseVersion < baseVersion))
+      XCTAssert(!(baseVersion > baseVersion))
+      
+      let version1 = AppVersion(major: 4, minor: 2)
+      XCTAssert(baseVersion < version1)
+      
+      let version2 = AppVersion(major: 3, minor: 4)
+      XCTAssert(baseVersion < version2)
+      
+      let version3 = AppVersion(major: 3, minor: 3)
+      XCTAssert(!(baseVersion < version3))
+      
+      let version4 = AppVersion(major: 2, minor: 3)
+      XCTAssert(baseVersion > version4)
+      
+      let version5 = AppVersion(major: 3, minor: 2)
+      XCTAssert(baseVersion > version5)
    }
 }

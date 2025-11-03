@@ -1,15 +1,26 @@
 import Foundation
 
 public struct AppVersion: Codable, Equatable {
+   public enum Format {
+      case twoDigits, threeDigits
+   }
    public let major: Int
    public let minor: Int
-   public let patch: Int
+   public let patch: Int?
    
-   public var asString: String {
-      "\(major).\(minor).\(patch)"
+   public var format: Format {
+      patch == nil ? .twoDigits : .threeDigits
    }
    
-   public init(major: Int, minor: Int, patch: Int) {
+   public var asString: String {
+      if let patch {
+         return "\(major).\(minor).\(patch)"
+      } else {
+         return "\(major).\(minor)"
+      }
+   }
+   
+   public init(major: Int, minor: Int, patch: Int?=nil) {
       self.major = major
       self.minor = minor
       self.patch = patch
@@ -17,22 +28,27 @@ public struct AppVersion: Codable, Equatable {
    
    public init?(versionString: String?) {
       guard let versionString = versionString else { return nil }
-      let components = versionString.split(separator: ".").compactMap { Int($0) }
-      guard components.count == 3 else {
-          return nil
-      }
-      self.major = components[0]
-      self.minor = components[1]
-      self.patch = components[2]
+      let parts = versionString.split(separator: ".")
+      guard parts.count == 2 || parts.count == 3 else { return nil }
+      let numbers = parts.compactMap { Int($0) }
+      guard numbers.count == parts.count else { return nil }
+      self.major = numbers[0]
+      self.minor = numbers[1]
+      self.patch = numbers.count == 3 ? numbers[2] : nil
    }
    
    public static func < (lhs: AppVersion, rhs: AppVersion) -> Bool {
+      guard lhs.format == rhs.format else {
+         assertionFailure("Comparring versions with different formats is not supported")
+         return false
+      }
+      
       if lhs.major != rhs.major {
          return lhs.major < rhs.major
       } else if lhs.minor != rhs.minor {
          return lhs.minor < rhs.minor
-      } else if lhs.patch != rhs.patch {
-         return lhs.patch < rhs.patch
+      } else if let lhsPatch = lhs.patch, let rhsPatch = rhs.patch, lhsPatch != rhsPatch {
+         return lhsPatch < rhsPatch
       }
       return false
    }
