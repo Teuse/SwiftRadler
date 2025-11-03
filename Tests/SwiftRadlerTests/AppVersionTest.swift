@@ -108,4 +108,42 @@ class AppVersionTests: XCTestCase {
       let version5 = AppVersion(major: 3, minor: 2)
       XCTAssert(baseVersion > version5)
    }
+   
+   func testGreaterSmallerComparisson_mixed2() throws {
+      let baseVersion2Digits = AppVersion(major: 3, minor: 3)
+      
+      let version1 = AppVersion(major: 4, minor: 2, patch: 3)
+      XCTAssert(baseVersion2Digits < version1)
+      
+      let version2 = AppVersion(major: 3, minor: 4, patch: 3)
+      XCTAssert(baseVersion2Digits < version2)
+      
+      let version3 = AppVersion(major: 3, minor: 3, patch: 3)
+      XCTAssert(!(baseVersion2Digits < version3))
+      
+      let version4 = AppVersion(major: 2, minor: 3, patch: 3)
+      XCTAssert(baseVersion2Digits > version4)
+      
+      let version5 = AppVersion(major: 3, minor: 2, patch: 3)
+      XCTAssert(baseVersion2Digits > version5)
+   }
+   
+   func testGreaterSmallerComparisson_mixed3() throws {
+      let baseVersion3Digits = AppVersion(major: 3, minor: 3, patch: 3)
+      
+      let version1 = AppVersion(major: 4, minor: 2)
+      XCTAssert(baseVersion3Digits < version1)
+      
+      let version2 = AppVersion(major: 3, minor: 4)
+      XCTAssert(baseVersion3Digits < version2)
+      
+      let version3 = AppVersion(major: 3, minor: 3)
+      XCTAssert(!(baseVersion3Digits < version3))
+      
+      let version4 = AppVersion(major: 2, minor: 3)
+      XCTAssert(baseVersion3Digits > version4)
+      
+      let version5 = AppVersion(major: 3, minor: 2)
+      XCTAssert(baseVersion3Digits > version5)
+   }
 }

@@ -38,11 +38,6 @@ public struct AppVersion: Codable, Equatable {
    }
    
    public static func < (lhs: AppVersion, rhs: AppVersion) -> Bool {
-      guard lhs.format == rhs.format else {
-         assertionFailure("Comparring versions with different formats is not supported")
-         return false
-      }
-      
       if lhs.major != rhs.major {
          return lhs.major < rhs.major
       } else if lhs.minor != rhs.minor {
