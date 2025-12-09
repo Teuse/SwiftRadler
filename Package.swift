@@ -30,7 +30,10 @@ let package = Package(
             dependencies: []),
         .target(
             name: "SwiftRadlerMSAL",
-            dependencies: ["SwiftRadler", "MSAL"]),
+            dependencies: [
+                "SwiftRadler",
+                .product(name: "MSAL", package: "microsoft-authentication-library-for-objc")
+            ]),
         .testTarget(
             name: "SwiftRadlerTests",
             dependencies: ["SwiftRadler", "SwiftRadlerMSAL"]),
