@@ -5,7 +5,7 @@ public struct TriStateToggle: View {
    let onColor: Color
    let offColor: Color
    
-   public init(_ value: Binding<Bool?>, onColor: Color = .green, offColor: Color = .blue) {
+   public init(_ value: Binding<Bool?>, onColor: Color = .green, offColor: Color = .gray) {
       self._value = value
       self.onColor = onColor
       self.offColor = offColor
@@ -96,17 +96,17 @@ public struct TriStateToggle: View {
       @State var isOn1: Bool? = nil
       @State var isOn2: Bool? = nil
       @State var isOn3: Bool? = nil
-      @State var isOn4: Bool? = nil
-      @State var isOn5: Bool? = nil
       
       var body: some View {
          VStack {
             TriStateToggle($isOn1)
             TriStateToggle($isOn2)
             TriStateToggle($isOn3)
-            TriStateToggle($isOn4)
-            TriStateToggle($isOn5)
-               
+            Button("Reset All") {
+               isOn1 = nil
+               isOn2 = nil
+               isOn3 = nil
+            }
          }
       }
    }

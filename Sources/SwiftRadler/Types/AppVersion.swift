@@ -28,6 +28,8 @@ public struct AppVersion: Codable, Equatable {
    
    public init?(versionString: String?) {
       guard let versionString = versionString else { return nil }
+      guard !versionString.contains("..") else { return nil }
+      guard versionString.first != "." && versionString.last != "." else { return nil }
       let parts = versionString.split(separator: ".")
       guard parts.count == 2 || parts.count == 3 else { return nil }
       let numbers = parts.compactMap { Int($0) }
@@ -55,3 +57,4 @@ public struct AppVersion: Codable, Equatable {
       return !(lhs < rhs)
    }
 }
+
