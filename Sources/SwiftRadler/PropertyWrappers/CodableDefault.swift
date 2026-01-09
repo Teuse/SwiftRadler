@@ -6,7 +6,12 @@ public struct CodableDefault<Value: Codable> {
    let defaultValue: Value
    private let encoder = JSONEncoder()
    private let decoder = JSONDecoder()
-
+   
+   public init(key: String, defaultValue: Value) {
+      self.key = key
+      self.defaultValue = defaultValue
+   }
+   
    public var wrappedValue: Value {
       get {
          if let data = UserDefaults.standard.object(forKey: key) as? Data,
