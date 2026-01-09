@@ -1,12 +1,12 @@
 import Foundation
 
 @propertyWrapper
-struct UserDefault<Value> {
+public struct UserDefault<Value> {
     let key: String
     let defaultValue: Value
     var container: UserDefaults = .standard
 
-    var wrappedValue: Value {
+    public var wrappedValue: Value {
         get {
             return container.object(forKey: key) as? Value ?? defaultValue
         }

@@ -1,23 +1,23 @@
 import Foundation
 
 @propertyWrapper
-struct CodableFileStorage<Value: Codable> {
+public struct CodableFileStorage<Value: Codable> {
     private let url: URL
     private let defaultValue: Value
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 
-    init(fileName: String, defaultValue: Value) {
+   public init(fileName: String, defaultValue: Value) {
         self.url = Self.documentsDirectory().appendingPathComponent(fileName)
         self.defaultValue = defaultValue
     }
 
-    init(url: URL, defaultValue: Value) {
+   public init(url: URL, defaultValue: Value) {
         self.url = url
         self.defaultValue = defaultValue
     }
 
-    var wrappedValue: Value {
+   public var wrappedValue: Value {
         get {
             do {
                 let data = try Data(contentsOf: url)
